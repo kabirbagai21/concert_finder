@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Artist List</title>
+</head>
+<style>
+body {
+  background-color: black;
+}
+
+h1 {
+  color: white;
+    font-family: 'Gotham Rounded', sans-serif;
+    text-align: center;
+     margin-bottom: 50px;
+    font-size: 60px;
+}
+h2 {
+    color: #1DB954;
+    font-family: 'Gotham Rounded', sans-serif;
+    text-align: center;
+
+}
+p {
+    color: white;
+     font-family: 'Gotham Rounded', sans-serif;
+    text-align: center;
+}
+
+.artist-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+}
+
+.artist-card {
+    background-color: #1DB954;
+    color: white;
+    padding: 10px;
+    border-radius: 10px;
+    font-size: 20px;
+    font-family: 'Gotham Rounded', sans-serif;
+}
+.concert-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.concert-card {
+    background-color: #828282;
+    color: white;
+    padding: 10px;
+    border-radius: 10px;
+    font-size: 20px;
+    font-family: 'Gotham Rounded', sans-serif;
+    text-decoration: none; /* Remove text underline */
+    opacity: 1; /* Set initial opacity */
+    transition: opacity 0.3s;
+}
+
+.concert-card:hover {
+    opacity: 0.8; /* Reduce opacity on hover */
+}
+ .search-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+            margin-bottom: 20px;
+ }
+
+.search-container input[type="search"],
+.search-container button {
+    margin-top: 10px;
+    background-color: black;
+    font-size: 18px;
+    width: 300px;
+    color:  #828282;
+}
+
+.button1 {
+  background-color: black;
+  color: #828282;
+    font-family: 'Gotham Rounded', sans-serif;
+  border: 2px solid #1DB954;
+}
+.button1:hover {
+  background-color: #1DB954;
+  color: white;
+}
+
+
+</style>
+<body>
+    <h1>My Top Artists</h1>
+      <div class="artist-container">
+        <!-- Iterate over the artist list and display each artist -->
+        {% for artist in artists %}
+            <div class="artist-card">{{ artist }}</div>
+        {% endfor %}
+    </div>
+<div class = "search-container">
+    <form id="form" action="/fetch-concerts" method="POST">
+  <input type="search" id="locationInput" name="location" placeholder="Enter Location">
+  <button class="button button1" onclick="fetchConcerts()">Find Concerts</button>
+</form>
+</div>
+    <div class = "concert-container">
+    {% if concert_info %}
+            {% for concert in concert_info %}
+                <a class="concert-card" href="{{ concert.link }}" target="_blank">{{ concert.name }} - {{ concert.date }} at {{ concert.time }} - {{ concert.venue }}, {{ concert.city }}, {{ concert.country }}</a>
+            {% endfor %}
+
+    {% else %}
+        <p>No concerts found.</p>
+    {% endif %}
+    </div>
+
+</body>
+</html>
